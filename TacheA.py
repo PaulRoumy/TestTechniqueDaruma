@@ -24,22 +24,26 @@ app.config["Debug"] = True
 
 listUser = [{'id': 0,'name': 'Paul'},{'id':1,'name':'Jean'}]
 
+# return all user in list
 @app.route('/users', methods= ['GET'])
 def getAllUser():
     return listUser
 
+# return user with correct id
 @app.route('/users/<id>', methods= ['GET'])
 def getOneUserById(id):
     for user in listUser:
         if user.get('id') == id:
             return user
 
+# add user in list from json
 @app.route('/users', methods= ['POST'])
 def addUser():
     listUser.insert(
         {'id': request.json['id'], 'name': request.json['name']}
     )
 
+# modify user with correct id with a json
 @app.route('/users/<id>', methods= ['PUT'])
 def modifyUser(id):
     for user in listUser:
@@ -47,6 +51,7 @@ def modifyUser(id):
             user.id = request.json['id']
             user.name = request.json['name']
 
+# delete user with correct id
 @app.route('/user/<id>', methods= ['DELETE'])
 def deleteUser(id):
     for user in listUser:
